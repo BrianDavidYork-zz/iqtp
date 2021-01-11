@@ -1,32 +1,64 @@
+const URI_VAR = 'www.iqtp.com/fakeAPI/post'
+
 export const fetchGetAllJobs = () => {
-  return {jobs: [
-    {title: true, description: true, skills: ["golang", "java", "ruby"], id: 1},
-    {title: true, description: true, skills: ["C++", "javascript", "ruby"], id: 2},
-    {title: true, description: true, skills: ["python", "go", 'rails'], id: 3}
-  ]}
+  fetch(URI_VAR, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      return response
+    })
 }
 
 export const fetchGetJob = (val) => {
-  console.log(val.job)
-  return{job: {title: 'hello', description: 'goodbye', skills: ['C', 'C#', 'C++']}}
+  fetch(URI_VAR + '/' + val, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => {
+      return response
+    })
 }
 
 export const fetchDeleteJob = (val) => {
-  console.log(val)
-  return {}
+  fetch(URI_VAR, {
+    method: 'DELETE',
+    body: val,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => {
+      return response
+    })
 }
 
 export const fetchCreateJob = (val) => {
-  console.log(val)
-  const newJob = {job: {id: 300, title: val.job.title, description: val.job.description, skills: val.job.skills}}
-  return newJob
+  fetch(URI_VAR, {
+    method: 'POST',
+    body: val,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => {
+      return response
+    })
 }
 
 export const fetchUpdateJob = (val) => {
-  setTimeout(function() {
-    console.log('async await')
-    return val
-  }, 1000)
-  // return val
+  fetch(URI_VAR, {
+    method: 'PATCH',
+    body: val,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => {
+      return response
+    })
 }
-

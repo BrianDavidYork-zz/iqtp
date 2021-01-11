@@ -67,17 +67,25 @@
     },
     methods: {
       async deleteJob(e) {
+        const isMatchingId = (i) => i.id === e
+        const arrIndex = this.allJobs.findIndex(isMatchingId)
         await fetchDeleteJob({job: e})
-        this.allJobs = fetchGetAllJobs().jobs
+        this.allJobs.splice(arrIndex, 1)
       },
       toggleEdit(e) {
+        if (this.jobBeingEdited !== null) {
+          const isMatchingId = (i) => i.id === this.jobBeingEdited.id
+          const arrIndex = this.allJobs.findIndex(isMatchingId)
+          const resp = fetchGetJob(this.jobBeingEdited.id)
+          this.allJobs[arrIndex] = resp.job
+        }
         this.jobBeingEdited = e
       },
       async updateJob(e) {
         const isMatchingId = (i) => i.id === e.id
         const arrIndex = this.allJobs.findIndex(isMatchingId)
         await fetchUpdateJob({job: e})
-        const resp = await fetchGetJob(e.id)
+         const resp = await fetchGetJob(e.id)
         this.allJobs[arrIndex] = resp.job
         this.jobBeingEdited = null
       },

@@ -35,7 +35,6 @@
         id: this.job.id
       }
     },
-    watch: {},
     methods: {
       deleteJob() {
         this.$emit('job-deleted', this.id)
