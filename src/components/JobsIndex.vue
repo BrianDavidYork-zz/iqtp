@@ -72,11 +72,11 @@
         await fetchDeleteJob({job: e})
         this.allJobs.splice(arrIndex, 1)
       },
-      toggleEdit(e) {
+      async toggleEdit(e) {
         if (this.jobBeingEdited !== null) {
           const isMatchingId = (i) => i.id === this.jobBeingEdited.id
           const arrIndex = this.allJobs.findIndex(isMatchingId)
-          const resp = fetchGetJob(this.jobBeingEdited.id)
+          const resp = await fetchGetJob(this.jobBeingEdited.id)
           this.allJobs[arrIndex] = resp.job
         }
         this.jobBeingEdited = e
