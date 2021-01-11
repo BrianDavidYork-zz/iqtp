@@ -23,6 +23,10 @@ export const fetchCreateJob = (val) => {
 }
 
 export const fetchUpdateJob = (val) => {
-  return val
+  setTimeout(function() {
+    console.log('async await')
+    return val
+  }, 1000)
+  // return val
 }
 

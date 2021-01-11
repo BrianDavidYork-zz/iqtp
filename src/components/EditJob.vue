@@ -9,12 +9,12 @@
         <div class="description">
             <h3>Job Description</h3>
             <label>
-                <input type="text" v-model="description">
+                <textarea v-model="description" rows="3" cols="40"></textarea>
             </label><br><br>
         </div>
         <div class="skills">
             <h3>Skills</h3>
-            <li v-for="(skill, index) in skills" v-bind:key="index">
+            <li  class="list" v-for="(skill, index) in skills" v-bind:key="index">
                 <label>
                     <input type="text" v-model="skills[index]">
                 </label><br>
@@ -40,14 +40,28 @@
         id: this.job.id
       }
     },
-    watch: {},
+    watch: {
+      skills: {
+        handler: function (val) {
+          if (val[val.length - 1] !== '') {
+            this.skills.push('')
+          }
+        },
+        deep: true
+      }
+    },
+    mounted() {
+      if (this.create === false  && this.skills[this.skills.length - 1] !== '') {
+        this.skills.push('')
+      }
+    },
     methods: {
       save() {
         // emit with job object
         const jobObj = {
           title: this.title,
           description: this.description,
-          skills: this.skills
+          skills: this.skills.filter(x => x !== '')
         }
         this.$emit('job-saved', jobObj)
         // clear all elements
@@ -59,7 +73,7 @@
         const newJobObj = {
           title: this.title,
           description: this.description,
-          skills: this.skills,
+          skills: this.skills.filter(x => x !== ''),
           id: this.id
         }
         this.$emit('job-updated', newJobObj)
@@ -87,5 +101,9 @@
     .button {
         width: 10%;
         float: left;
+    }
+
+    .list {
+        list-style: none;
     }
 </style>

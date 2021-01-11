@@ -10,7 +10,7 @@
         </div>
         <div class="skills">
             <h3>Skills</h3>
-            <li v-for="(skill, index) in skills" v-bind:key="index">
+            <li  class="list" v-for="(skill, index) in skills" v-bind:key="index">
                 {{skills[index]}}
             </li>
         </div>
@@ -19,6 +19,7 @@
             <button type="button" @click="deleteJob()">Delete</button>
             <button type="button" @click="editJob()">Edit</button>
         </div>
+        <br><br><br>
     </div>
 </template>
 
@@ -30,7 +31,7 @@
       return {
         title: this.job.title,
         description: this.job.description,
-        skills: this.job.skills,
+        skills: this.job.skills.filter(x => x !== ''),
         id: this.job.id
       }
     },
@@ -65,5 +66,9 @@
     .button {
         width: 10%;
         float: left;
+    }
+
+    .list {
+        list-style: none;
     }
 </style>

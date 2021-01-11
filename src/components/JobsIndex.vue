@@ -25,11 +25,12 @@
             </h5>
             <br v-else>
         </div>
-        <li v-for="job in filteredJobs" v-bind:key="job.id">
+        <li class="list" v-for="job in filteredJobs" v-bind:key="job.id">
             <EditJob
                 v-if="job === jobBeingEdited"
                 :job="jobBeingEdited"
-                v-on:job-updated="updateJob($event)">
+                v-on:job-updated="updateJob($event)"
+                :create="false">
             </EditJob>
             <ShowJob
                 v-else
@@ -65,23 +66,23 @@
       this.filteredJobs = this.allJobs
     },
     methods: {
-      deleteJob(e) {
-        fetchDeleteJob({job: e})
+      async deleteJob(e) {
+        await fetchDeleteJob({job: e})
         this.allJobs = fetchGetAllJobs().jobs
       },
       toggleEdit(e) {
         this.jobBeingEdited = e
       },
-      updateJob(e) {
+      async updateJob(e) {
         const isMatchingId = (i) => i.id === e.id
         const arrIndex = this.allJobs.findIndex(isMatchingId)
-        fetchUpdateJob({job: e})
-        const resp = fetchGetJob(e.id)
+        await fetchUpdateJob({job: e})
+        const resp = await fetchGetJob(e.id)
         this.allJobs[arrIndex] = resp.job
         this.jobBeingEdited = null
       },
-      createJob(e) {
-        const resp = fetchCreateJob({job: e})
+      async createJob(e) {
+        const resp = await fetchCreateJob({job: e})
         this.allJobs.push(resp.job)
       },
       onInput() {
@@ -119,5 +120,9 @@
 
     .filter {
         text-align: center;
+    }
+
+    .list {
+        list-style: none;
     }
 </style>
